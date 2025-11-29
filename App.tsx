@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar';
 import { ProductCard } from './components/ProductCard';
 import { AdminPanel } from './components/AdminPanel';
-import { AdminLogin } from './components/AdminLogin';
 import { Cart } from './components/Cart';
 import { Assistant } from './components/Assistant';
 import { SplashScreen } from './components/SplashScreen';
@@ -28,9 +27,6 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  
-  // Admin Authentication State
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('theme');
@@ -98,21 +94,6 @@ const App: React.FC = () => {
     setTimeout(() => {
       productSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
-  };
-
-  // Admin Login Logic
-  const handleAdminLogin = async (username: string, pass: string): Promise<boolean> => {
-    // Normalize inputs to prevent whitespace issues and case sensitivity
-    const cleanUser = username.trim().toLowerCase();
-    const cleanPass = pass.trim();
-
-    // Check credentials against the required values
-    if (cleanUser === 'xrrahul' && cleanPass === 'xr123') {
-      setIsAdminLoggedIn(true);
-      return true;
-    }
-
-    return false;
   };
 
   const filteredProducts = products.filter(p => {
@@ -229,11 +210,7 @@ const App: React.FC = () => {
 
         {view === 'admin' && (
           <div className="max-w-7xl mx-auto py-8">
-            {isAdminLoggedIn ? (
-              <AdminPanel products={products} />
-            ) : (
-              <AdminLogin onLogin={handleAdminLogin} />
-            )}
+            <AdminPanel products={products} />
           </div>
         )}
 
