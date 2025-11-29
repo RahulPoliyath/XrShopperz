@@ -1,0 +1,5 @@
+{
+  "name": "ShopperzStop",
+  "description": "A modern, AI-powered e-commerce platform featuring a dual Customer/Admin interface. It uses Gemini AI for generating product descriptions and a smart shopping assistant for customers.",
+  "requestFramePermissions": []
+}
