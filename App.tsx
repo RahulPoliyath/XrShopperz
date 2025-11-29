@@ -102,21 +102,16 @@ const App: React.FC = () => {
 
   // Admin Login Logic
   const handleAdminLogin = async (username: string, pass: string): Promise<boolean> => {
-    if (username !== 'xrrahul') return false;
+    // Normalize inputs to prevent whitespace issues and case sensitivity
+    const cleanUser = username.trim().toLowerCase();
+    const cleanPass = pass.trim();
 
-    // Encrypt (Hash) the input password and compare with expected hash
-    const msgBuffer = new TextEncoder().encode(pass);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
-    // SHA-256 hash of 'xr123'
-    const expectedHash = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
-
-    if (hashHex === expectedHash) {
+    // Check credentials against the required values
+    if (cleanUser === 'xrrahul' && cleanPass === 'xr123') {
       setIsAdminLoggedIn(true);
       return true;
     }
+
     return false;
   };
 
